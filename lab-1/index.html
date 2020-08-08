@@ -8,7 +8,7 @@
 </head>
 <body class="paper">
 	<div id="app">
-		<input type="number">
+		<input type="number" id="fname" value="2">
 		<div class="space"></div>
 		<h4>{{number}} x 1 = x</h4>
 		<h4>{{number}} x 2 = x</h4>
@@ -22,15 +22,17 @@
 		<h4>{{number}} x 10 = x</h4>
 		<h4>{{number}} x 11 = x</h4>
 		<h4>{{number}} x 12 = x</h4>
+		<p id="demo"></p>
 	</div>
 
 	<script>
 		let app = new Vue({
 			el: '#app',
 			data: {
-				number: 2
+				number: document.getElementById("fname").value
 			}
 		})
+		document.getElementById("demo").innerHTML = document.getElementById("fname").value;
 	</script>
 </body>
 </html>
