@@ -12,21 +12,12 @@
 		<input type="number" v-model="row_input" >
 		<div class="space"> 
 		</div>
-		<div v-for="n in row_input*1" ><h4>{{int_input}} x {{n}} = {{n*int_input}}</h4></div>
+		<div v-for="n in row_input*1" ><h4>{{int_input}} x {{n}} = {{n*int_input}}</h4></div> 
+		<div> <h4> {{ sum(row_input*1)*int_input*1 }}  <!--  {{sum(row_input*1)}} --> </h4> </div>
+
+
 		
-		
-<!-- 		<h4>{{int_input}} x 1 = x</h4>
-		<h4>{{int_input}} x 2 = x</h4>
-		<h4>{{int_input}} x 3 = x</h4>
-		<h4>{{int_input}} x 4 = x</h4>
-		<h4>{{int_input}} x 5 = x</h4>
-		<h4>{{int_input}} x 6 = x</h4>
-		<h4>{{int_input}} x 7 = x</h4>
-		<h4>{{int_input}} x 8 = x</h4>
-		<h4>{{int_input}} x 9 = x</h4>
-		<h4>{{int_input}} x 10 = x</h4>
-		<h4>{{int_input}} x 11 = x</h4>
-		<h4>{{int_input}} x 12 = x</h4> -->
+
 
 	</div>
 
@@ -36,7 +27,15 @@
 			data: {
 				int_input: 2,
 				row_input:12
-			}
+			},
+			methods: {
+  			sum: function (n_sum) { 
+  				if (n_sum>1) {
+  					return this.sum(n_sum-1)+n_sum
+  				}
+  				else{ return 1 }
+  			}
+}
 			
 		})
 		
