@@ -18,10 +18,12 @@
 		
 		<div class="space"> 
 		</div>
+
 		<div v-for="n in row_input*1" ><h4 class="text-center font-bold not-italic ">{{int_input}} x {{n}} = {{n*int_input}}</h4></div> 
 		<div class="space"> </div>
 		<div  class="px-2 py-1">
 			 <span class="inline-block bg-gray-200  px-1 py-3 text-sm font-semibold text-purple-700 ">ผลบวกของผลลัพธ์ของสูตรคูณแม่{{int_input}} = {{ sum(row_input*1)*int_input*1 }}  </span>
+			 <h4 class="text-center font-bold not-italic ">สูตรคูณแม่ก่อนหน้านี้ <u onclick="app.click_befor()">สูตรคูณเเม่ {{befor}}</u></h4>
 	
 		</div>
 
@@ -36,7 +38,9 @@
 			el: '#app',
 			data: {
 				int_input: 2,
-				row_input:12
+				row_input:12,
+				befor :2,
+				save_var : 0
 			},
 			methods: {
   			sum: function (n_sum) { 
@@ -44,8 +48,20 @@
   					return this.sum(n_sum-1)+n_sum
   				}
   				else{ return 1 }
+  				},
+  			click_befor: function () {
+  				this.save_var = this.int_input
+  				 this.int_input = this.befor
+  				 this.befor = this.save_var 
   			}
-}
+			},
+			watch: {
+				int_input: function(a,b) {
+					
+					this.befor = b;
+				}
+			}
+
 			
 		})
 		
