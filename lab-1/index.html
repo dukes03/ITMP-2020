@@ -8,31 +8,38 @@
 </head>
 <body class="paper">
 	<div id="app">
-		<input type="number" id="fname" value="2">
-		<div class="space"></div>
-		<h4>{{number}} x 1 = x</h4>
-		<h4>{{number}} x 2 = x</h4>
-		<h4>{{number}} x 3 = x</h4>
-		<h4>{{number}} x 4 = x</h4>
-		<h4>{{number}} x 5 = x</h4>
-		<h4>{{number}} x 6 = x</h4>
-		<h4>{{number}} x 7 = x</h4>
-		<h4>{{number}} x 8 = x</h4>
-		<h4>{{number}} x 9 = x</h4>
-		<h4>{{number}} x 10 = x</h4>
-		<h4>{{number}} x 11 = x</h4>
-		<h4>{{number}} x 12 = x</h4>
-		<p id="demo"></p>
+		<input type="number" v-model="int_input" >
+		<input type="number" v-model="row_input" >
+		<div class="space"> 
+		</div>
+		<div v-for="n in row_input*1" ><h4>{{int_input}} x {{n}} = {{n*int_input}}</h4></div>
+		
+		
+<!-- 		<h4>{{int_input}} x 1 = x</h4>
+		<h4>{{int_input}} x 2 = x</h4>
+		<h4>{{int_input}} x 3 = x</h4>
+		<h4>{{int_input}} x 4 = x</h4>
+		<h4>{{int_input}} x 5 = x</h4>
+		<h4>{{int_input}} x 6 = x</h4>
+		<h4>{{int_input}} x 7 = x</h4>
+		<h4>{{int_input}} x 8 = x</h4>
+		<h4>{{int_input}} x 9 = x</h4>
+		<h4>{{int_input}} x 10 = x</h4>
+		<h4>{{int_input}} x 11 = x</h4>
+		<h4>{{int_input}} x 12 = x</h4> -->
+
 	</div>
 
 	<script>
 		let app = new Vue({
 			el: '#app',
 			data: {
-				number: document.getElementById("fname").value
+				int_input: 2,
+				row_input:12
 			}
+			
 		})
-		document.getElementById("demo").innerHTML = document.getElementById("fname").value;
+		
 	</script>
 </body>
 </html>
