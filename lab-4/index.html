@@ -28,7 +28,7 @@
 	</div>
 
 	<script>
-		let picklight = "80%" //เลือกว่ารอบนี้ อันพิเศษจะมีความสว่าง 20%
+		let picklight = "70%" //เลือกว่ารอบนี้ อันพิเศษจะมีความสว่าง 20%
 		//document.registerElement('a-dot') //ให้ vue รู้จัก a-dot
 
 		function rand(start,stop){//สร้างฟังก์ชัน random ไว้ใช้
@@ -44,7 +44,7 @@
 				time:10, //เวลาเริ่มต้น
 				score:0, //คะแนนเริ่มต้น
 				pick:1, //หมายเลขวงกลมที่จะสีแตกต่างจากก้อนอื่นๆ
-				l:50,//ความสว่างของสีทั่วไปในรอบนี้
+				l:rand(40,60),//ความสว่างของสีทั่วไปในรอบนี้
 			},
 			methods: {
 				check: function(i){
@@ -53,7 +53,7 @@
 						this.time++;
 						this.pick = rand(1,this.row*this.row);
 						this.h = rand(0,2000);
-
+						this.l = rand(40,60);
 						if (this.score >=this.row**2) {
 							this.row++;
 						}
@@ -61,6 +61,7 @@
 
 					}
 					else{
+					this.l = 50;
 					this.pick = rand(1,this.row*this.row);
 					this.h = rand(0,2000);
 					this.row = this.row;
@@ -88,7 +89,7 @@
 				}
 			}else{
 				window.alert("หมดเวลา ได้ "+app.score+' คะแนน' );
-				window.alert('เล่นอีกครั้ง' );
+				window.alert('เล่นอีกครั้ง?' );
 				location.reload()
 				clearInterval(counter);
 			}
