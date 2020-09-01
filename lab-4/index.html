@@ -15,8 +15,8 @@
 		</section>
 		<section id="canvas_main">
 			<main>
-				<a-dot v-for ='i in row*row' :style="{'--row': row, '--h': h,'--l':l+'%'}"
-				:data-pack = "i == pick" @click="check(i)" ></a-dot>
+				<a-dot v-for ="i in row*row":style="{'--row': row, '--h': h,'--l':l+'%'}"
+				:data-pick = "i == pick" @click="check(i)" ></a-dot>
 	
 			</main>
 		</section>
@@ -28,7 +28,7 @@
 	</div>
 
 	<script>
-		let picklight = "20%" //เลือกว่ารอบนี้ อันพิเศษจะมีความสว่าง 20%
+		let picklight = "80%" //เลือกว่ารอบนี้ อันพิเศษจะมีความสว่าง 20%
 		//document.registerElement('a-dot') //ให้ vue รู้จัก a-dot
 
 		function rand(start,stop){//สร้างฟังก์ชัน random ไว้ใช้
@@ -52,6 +52,8 @@
 						this.score++;
 						this.time++;
 						this.pick = rand(1,this.row*this.row);
+						this.h = rand(0,2000);
+
 						if (this.score >=this.row**2) {
 							this.row++;
 						}
@@ -75,8 +77,19 @@
 		let counter = setInterval(()=>{
 			if (app.time>0) {
 				app.time--
+				if ((app.score/app.score**2)>=50) {
+					picklight = "70%"
+				}
+				else if((app.score/app.score**2)>=75){
+					picklight = "60%"
+				}
+				else{
+					picklight = "80%"
+				}
 			}else{
-				window.alert("หมดเวลา");
+				window.alert("หมดเวลา ได้ "+app.score+' คะแนน' );
+				window.alert('เล่นอีกครั้ง' );
+				location.reload()
 				clearInterval(counter);
 			}
 
