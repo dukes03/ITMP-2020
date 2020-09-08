@@ -10,7 +10,7 @@
 	<div id="canvas">
 		<section id="canvas_header">
 			<div>
-				-- แสดงคะแนน
+				{{score}} แสดงคะแนน
 			</div>
 		</section>
 		<section id="canvas_main" 
@@ -19,9 +19,9 @@
 				<div class="box _path" 
 				v-for="i in 14" 
 				:data-pst="i"></div>
-				<div class="box _toggle" data-pst="10" data-isrightarrow="1"></div>
+				<div class="box _toggle" data-pst="10" :data-isrightarrow="isRightArrow"></div>
 
-				<div class="box _fruit"></div>
+				<div class="box _fruit" :data-type="i.type" :data-pst="i.pst" v-for="i in fruits" ></div>
 
 				<div class="box _origin"></div>
 				<div class="box _12" data-pst="12"></div>
@@ -30,10 +30,14 @@
 			</main>
 		</section>
 		<section id="canvas_footer">
-			<div v-if="play" class="btn" id="toggle">
+			<div v-if="play" class="btn" id="toggle" @click="toggle">
 				Toggle
 			</div>
-			<div v-if="!play" class="btn" id="endgame">
+			 <div v-if="play" class="btn" id="Speed_UP" @click="speed_up">
+				Speed UP
+			</div>
+
+			<div v-if="!play" class="btn" id="endgame" onclick="location.reload()">
 				Ene Game
 			</div>
 		</section>
@@ -47,21 +51,102 @@
 		
 		let fruitCount = 5
 		let isRightArrow = 1
-		let speed = 1000
+		
+		
 		let app = new Vue({
 			el:'#canvas',
 			data:{
 				play:true,
+				isRightArrow:isRightArrow,
 				time:0,
 				score:0,
+				endgame:0,
+				fruitselect:-1,
+				speed : 1000,
+				as:-1,
 				fruits:[
 					{id:1,type:13,pst:6,run:true,step:1},
 					{id:2,type:11,pst:3,run:true,step:1},
 					{id:3,type:11,pst:2,run:true,step:1},
 					{id:4,type:13,pst:1,run:true,step:1},
+					{id:5,type:13,pst:8,run:true,step:1},
+					{id:6,type:11,pst:-2,run:true,step:1},
+					{id:7,type:13,pst:-3,run:true,step:1},
 				]
+			},methods:{
+				speed_up:function(){ this.speed =this.speed-80;console.log(this.speed)},
+				toggle: function () {/*
+					if (this.isRightArrow == 1) {
+						this.isRightArrow = 0;
+						console.log(parseInt(this.fruitselect)>= 0, this.fruitselect)
+						if (parseInt(this.fruitselect)>= 0) {this.fruits[this.fruitselect].step = 1;
+							console.log(this.fruits[this.fruitselect].step, 1)
+						}
+					}
+					else{
+						this.isRightArrow = 1
+						if (parseInt(this.fruitselect)>= 0) {this.fruits[this.fruitselect].step = 3;
+						console.log(this.fruits[this.fruitselect].step, 3)
+					}
+					}
+				}
+			*/
+			this.as = -1;
+			for (var i in this.fruits ) {
+				if (this.fruits[i].pst == 10) {this.as = i}
 			}
+			if (this.isRightArrow == 1) {
+						this.isRightArrow = 0;
+						if (this.as>-1 ) {this.fruits[this.as].step = 1}
+						}
+			else {this.isRightArrow = 1;
+				if (this.as>-1 ) {this.fruits[this.as].step = 3} 
+				}
+			}},
+			computed:{},
+			watch:{  
+				time: function (x) {
+					if (this.endgame >= 3) {this.play=0}
+					for (var i in this.fruits ) {
+					  	let run = this.fruits[i].run
+					  	if (run) {
+					  		this.fruits[i].pst = this.fruits[i].pst+this.fruits[i].step;
+					  		if (this.fruits[i].pst == 10) {
+					  			this.fruitselect = parseInt(i) ;
+					  			console.log(this.fruitselect)
+					  			if (this.isRightArrow == 1) {this.fruits[i].step = 3}
+					  			else {this.fruits[i].step =1}
+					  			
+					  		}
+					  		else{
+					  			this.fruitselect = -1;
+					  		}
+					  		if (this.fruits[i].pst == 12) {
+					  			if (this.fruits[i].type == 11 ) {this.score++} 
+					  				else {this.score = this.score-3;this.endgame++}
+					  			this.fruits[i].step = 5} 
+					  		else if (this.fruits[i].pst == 16) {
+					  			if (this.fruits[i].type == 13 ) {this.score++} 
+					  				else {this.score = this.score-3;this.endgame++}
+
+					  			}
+					  		else if (this.fruits[i].pst >=20) {this.fruits[i].pst = 0;this.fruits[i].step = 1;
+					  			if (rand(0,100)>50) {this.fruits[i].type =13} else {this.fruits[i].type =11}}				  		
+					  	} 
+					  		
+					  }  
+				},
+				
+
+
+			}
+
+
 		})
+setTimeout(function timespeed(){
+			if (app.play) {app.time++;setTimeout(timespeed, app.speed)}
+			
+		},app.speed) 
 	</script>
 </body>
 </html>
